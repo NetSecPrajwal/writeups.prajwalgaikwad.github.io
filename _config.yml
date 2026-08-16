@@ -1,0 +1,31 @@
+title: "Prajwal Gaikwad"
+tagline: "Writeups. Research. Notes."
+description: "CTF writeups, security research, and personal notes from a penetration tester in the making."
+url: "https://writeups.prajwalgaikwad.in"
+baseurl: ""
+author:
+  name: "Prajwal Gaikwad"
+  handle: "@NetSecPrajwal"
+  github: "https://github.com/NetSecPrajwal"
+  twitter: "https://x.com/0x_prajwal_"
+  portfolio: "https://prajwalgaikwad.in"
+
+markdown: kramdown
+permalink: /:year/:month/:day/:title/
+
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+
+categories_list:
+  - CTF
+  - Research
+  - Security
+  - Personal
+  - Notes

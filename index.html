@@ -1,0 +1,75 @@
+---
+layout: default
+---
+
+<div class="hero reveal">
+  <div class="hero-eyebrow">pg/writes</div>
+  <h1>Thoughts, writeups,<br>and field notes.</h1>
+  <p>CTF walkthroughs, security research, and whatever else is worth documenting. Written by Prajwal Gaikwad — penetration tester in the making.</p>
+  <div class="hero-chips">
+    {% for cat in site.categories_list %}
+      <span class="chip">{{ cat }}</span>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="post-list-wrap">
+  <div class="list-header">
+    <span class="list-title">All Posts</span>
+    <span class="post-count">{{ site.posts | size }} entries</span>
+  </div>
+
+  <div class="cat-filters">
+    <button class="cat-btn active" data-cat="all">All</button>
+    {% for cat in site.categories_list %}
+      <button class="cat-btn" data-cat="{{ cat }}">{{ cat }}</button>
+    {% endfor %}
+  </div>
+
+  {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+  {% for year_group in posts_by_year %}
+    <div class="post-group" data-year="{{ year_group.name }}">
+      <div class="post-year">{{ year_group.name }}</div>
+      {% for post in year_group.items %}
+        <a class="post-row reveal" href="{{ post.url | relative_url }}" data-cat="{{ post.category | default: 'uncategorized' }}">
+          <div class="post-row-left">
+            <span class="post-row-title">{{ post.title }}</span>
+            <div class="post-row-meta">
+              {% if post.category %}<span class="post-cat">{{ post.category }}</span>{% endif %}
+              {% if post.description %}<span class="post-excerpt-short">{{ post.description | truncate: 80 }}</span>{% endif %}
+            </div>
+          </div>
+          <span class="post-date">{{ post.date | date: "%b %d" }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty">// No posts yet. Check back soon.</div>
+  {% endfor %}
+</div>
+
+<script>
+const btns = document.querySelectorAll('.cat-btn');
+const rows = document.querySelectorAll('.post-row');
+const groups = document.querySelectorAll('.post-group');
+
+btns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    btns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    rows.forEach(row => {
+      if(cat === 'all' || row.dataset.cat === cat){
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+    // Hide empty year groups
+    groups.forEach(g => {
+      const visible = [...g.querySelectorAll('.post-row')].some(r => r.style.display !== 'none');
+      g.style.display = visible ? '' : 'none';
+    });
+  });
+});
+</script>

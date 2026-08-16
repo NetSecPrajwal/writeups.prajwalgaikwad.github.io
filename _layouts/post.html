@@ -1,0 +1,38 @@
+---
+layout: default
+---
+<div class="post-wrap">
+  <header class="post-header reveal">
+    <div class="post-header-meta">
+      {% if page.category %}
+        <span class="post-header-cat">{{ page.category }}</span>
+        <div class="post-header-dot"></div>
+      {% endif %}
+      <span class="post-header-date">{{ page.date | date: "%b %d, %Y" }}</span>
+    </div>
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}
+      <p class="post-header-desc">{{ page.description }}</p>
+    {% endif %}
+    <div class="post-reading">
+      <span>{{ content | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
+      <span style="margin:0 .3rem;color:var(--text-3)">·</span>
+      <span>{{ content | number_of_words }} words</span>
+    </div>
+  </header>
+
+  <div class="post-body reveal">
+    {{ content }}
+  </div>
+
+  <div class="post-footer reveal">
+    <a href="{{ '/' | relative_url }}" class="back-btn">← All Posts</a>
+    {% if page.tags %}
+      <div class="post-tags">
+        {% for tag in page.tags %}
+          <span class="p-tag">#{{ tag }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
